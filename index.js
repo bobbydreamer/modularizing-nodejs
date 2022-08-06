@@ -16,33 +16,13 @@ app.use((req, res, next) => {
     next();  
 });
 
-app.use((req, res, next) => {
-    console.log("Just another middleware : " + Date.now());
-    next();  
-});
-
-//Simple request time logger for a specific route
-app.use('/about', (req, res, next) => {
-    console.log('Middleware for /about - ' + Date.now());
-    next();
-});
-
-
 /************************************************/
 // Routes
-
-app.get('/', (req, res) => res.send('Hello World!'));
-
- 
-app.get('/home', (req, res) => {
-    res.send('Home Page');
-});
-
-
-app.get('/about', (req, res) => {
-    res.send('About');
-});
-
+// -- Notice
+// * One Advantage using this technique .use() is it loads the middleware function in it.
+// * When you call http://localhost:3000/books/12 middleware in ./routes/homepages alone get triggered.
+app.use(require('./routes/homepages'));  //http://localhost:3000/    http://localhost:3000/about
+app.use("/main",require('./routes/homepages'));  //http://localhost:3000/main  http://localhost:3000/main/about
 
 app.get('/books/:bookId', (req, res) => {
     res.send(req.params);
@@ -56,4 +36,6 @@ app.get('*', (req, res) => {
 
 /************************************************/
 // Listener
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+let server = app.listen(3000, function () {
+    console.log(`Example app listening at http://localhost:${server.address().port}`)  
+});
