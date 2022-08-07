@@ -6,6 +6,7 @@ const books = require('./routes/books')
 const number = require('./routes/number')
 const posts = require('./routes/posts')
 const user = require('./routes/user')
+const wiki = require('./routes/wiki')
 
 
 /************************************************/
@@ -25,6 +26,8 @@ app.use(number);  //http://localhost:3000/number/12
 app.use("/books",books);  //http://localhost:3000/books/12
 app.use("/posts",posts);  //http://localhost:3000/posts/one
 app.use("/user",user);  //http://localhost:3000/user/profile
+
+app.get("/wiki", wiki.wikiData)
 
 /************************************************/
 // Final Invalid Route
