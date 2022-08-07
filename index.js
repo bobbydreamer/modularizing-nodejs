@@ -10,6 +10,7 @@ const user = require('./routes/user')
 
 /************************************************/
 // Middleware
+const { errorLogger, errorResponder, invalidPathHandler } = require('./middlewares/errMiddleware')
 
 /************************************************/
 // Routes
@@ -24,11 +25,12 @@ app.use(number);  //http://localhost:3000/number/12
 app.use("/books",books);  //http://localhost:3000/books/12
 app.use("/posts",posts);  //http://localhost:3000/posts/one
 app.use("/user",user);  //http://localhost:3000/user/profile
+
 /************************************************/
 // Final Invalid Route
-app.get('*', (req, res) => {
-    res.send('404! This is an invalid URL.');
-});
+app.use(errorLogger)
+app.use(errorResponder)
+app.use(invalidPathHandler)
 
 /************************************************/
 // Listener

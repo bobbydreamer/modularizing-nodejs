@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-//This Middleware will be called for everything
-router.use((req, res, next) => {
-  console.log(`${Date.now()} : ${req.method} url:: ${req.url}`);
-  next();
-});
+const { requestLogger } = require('../middlewares/mwRequestLogger')
 
+/************************************************/
+// Middleware
+router.use(requestLogger)
+
+/************************************************/
+// Routes
 router.get('/', (req, res) => res.send('Hello World!'));
 
  

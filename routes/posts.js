@@ -3,12 +3,14 @@ var router = express.Router();
 
 
 router.get('/one', (req, res) => {
-    res.send('Post one');
+    const post = {blogID: "1", title: "Hello World!"};
+    res.json(post);
 });
 
 
 router.get('/two', (req, res) => {
-    res.send('Post Two');
+    const post = {blogID: "2", title: "CSS is Sciencce, i am not a science guy"};
+    res.json(post);
 });
 
 
