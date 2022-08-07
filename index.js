@@ -1,33 +1,29 @@
 const express = require('express');
 const app = express();
 
+// Routes
+const books = require('./routes/books')
+const number = require('./routes/number')
+const posts = require('./routes/posts')
+const user = require('./routes/user')
+
 
 /************************************************/
 // Middleware
-
-// Simple request time logger
-app.use((req, res, next) => {
-    console.log("A new request received at " + Date.now());
- 
-    // This function call tells that more processing is
-    // required for the current request and is in the next middleware
-    
-    // function/route handler.
-    next();  
-});
 
 /************************************************/
 // Routes
 // -- Notice
 // * One Advantage using this technique .use() is it loads the middleware function in it.
-// * When you call http://localhost:3000/books/12 middleware in ./routes/homepages alone get triggered.
+// * When you call http://localhost:3000/books/12 , you can notice the middleware in ./routes/homepages get triggered.
 app.use(require('./routes/homepages'));  //http://localhost:3000/    http://localhost:3000/about
 app.use("/main",require('./routes/homepages'));  //http://localhost:3000/main  http://localhost:3000/main/about
 
-app.get('/books/:bookId', (req, res) => {
-    res.send(req.params);
-});
+app.use(number);  //http://localhost:3000/number/12
 
+app.use("/books",books);  //http://localhost:3000/books/12
+app.use("/posts",posts);  //http://localhost:3000/posts/one
+app.use("/user",user);  //http://localhost:3000/user/profile
 /************************************************/
 // Final Invalid Route
 app.get('*', (req, res) => {

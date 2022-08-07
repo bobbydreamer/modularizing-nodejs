@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-//Middleware that is specific to this router
-router.use(function timeLog(req, res, next) {
-  console.log('Homepages - Time: ', Date.now());
+//This Middleware will be called for everything
+router.use((req, res, next) => {
+  console.log(`${Date.now()} : ${req.method} url:: ${req.url}`);
   next();
 });
 
