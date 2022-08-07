@@ -1,6 +1,13 @@
+// tjholowaychuk's way : https://vimeo.com/56166857
 const express = require('express');
 const app = express();
 
+const homepages = require('./routes/homepages')
+const books = require('./routes/books')
+const number = require('./routes/number')
+const posts = require('./routes/posts')
+const user = require('./routes/user')
+const wiki = require('./routes/wiki')
 
 /************************************************/
 // Middleware
@@ -8,45 +15,17 @@ const app = express();
 // Simple request time logger
 app.use((req, res, next) => {
     console.log("A new request received at " + Date.now());
- 
-    // This function call tells that more processing is
-    // required for the current request and is in the next middleware
-    
-    // function/route handler.
     next();  
 });
-
-app.use((req, res, next) => {
-    console.log("Just another middleware : " + Date.now());
-    next();  
-});
-
-//Simple request time logger for a specific route
-app.use('/about', (req, res, next) => {
-    console.log('Middleware for /about - ' + Date.now());
-    next();
-});
-
 
 /************************************************/
 // Routes
-
-app.get('/', (req, res) => res.send('Hello World!'));
-
- 
-app.get('/home', (req, res) => {
-    res.send('Home Page');
-});
-
-
-app.get('/about', (req, res) => {
-    res.send('About');
-});
-
-
-app.get('/books/:bookId', (req, res) => {
-    res.send(req.params);
-});
+app.use(homepages)
+app.use(books)
+app.use(number)
+app.use(posts)
+app.use(user)
+app.use(wiki)
 
 /************************************************/
 // Final Invalid Route
